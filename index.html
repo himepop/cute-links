@@ -1,584 +1,510 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>himepop</title>
-  <meta name="description" content="himepop — an editorial pastel personal site" />
-  <style>
-    :root {
-      --paper: #f5f0e4;
-      --paper-2: #fbf8f1;
-      --ink: #5f5043;
-      --muted: #7b6d61;
-      --line: #857464;
-      --pink: #efcfdd;
-      --blue: #c8dfef;
-      --green: #b7dca2;
-      --yellow: #f0d76c;
-      --peach: #dfae78;
-      --sand: #c8b08e;
-      --cream: #f8f2cf;
-      --shadow: 0 24px 60px rgba(95, 80, 67, 0.14);
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Georgia, "Times New Roman", serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 12% 14%, rgba(239,207,221,.55), transparent 20%),
-        radial-gradient(circle at 88% 10%, rgba(200,223,239,.45), transparent 20%),
-        radial-gradient(circle at 22% 84%, rgba(183,220,162,.35), transparent 18%),
-        linear-gradient(180deg, #f7f2e8, #f3eee1 55%, #f7f2e8);
-      padding: 24px;
-    }
-
-    a { color: inherit; }
-
-    .site {
-      max-width: 1180px;
-      margin: 0 auto;
-      background: rgba(251,248,241,.94);
-      border: 2px solid var(--line);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: center;
-      padding: 10px 18px;
-      border-bottom: 2px solid var(--line);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: rgba(255,255,255,.45);
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      border-bottom: 2px solid var(--line);
-    }
-
-    .hero-left {
-      padding: 28px 28px 22px;
-      border-right: 2px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(240,215,108,.12), rgba(239,207,221,.08));
-    }
-
-    .kicker {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .title-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(3.4rem, 9vw, 7rem);
-      line-height: .88;
-      letter-spacing: -.06em;
-      font-weight: 700;
-    }
-
-    .bubble {
-      flex: 0 0 auto;
-      margin-top: 12px;
-      padding: 12px 18px;
-      border: 2px solid var(--line);
-      border-radius: 999px;
-      background: var(--paper-2);
-      transform: rotate(-4deg);
-      font-size: 1.05rem;
-      box-shadow: 4px 4px 0 rgba(133,116,100,.08);
-    }
-
-    .lede {
-      max-width: 620px;
-      margin: 18px 0 0;
-      font-size: 18px;
-      line-height: 1.65;
-      color: var(--muted);
-    }
-
-    .hero-right {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      min-height: 360px;
-      background: var(--blue);
-    }
-
-    .hero-note {
-      padding: 18px 20px;
-      border-bottom: 2px solid var(--line);
-      background: rgba(255,255,255,.32);
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--ink);
-    }
-
-    .motif-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .motif {
-      min-height: 132px;
-      position: relative;
-      border-right: 2px solid var(--line);
-      border-bottom: 2px solid var(--line);
-      overflow: hidden;
-    }
-
-    .motif:nth-child(1) { background: var(--pink); }
-    .motif:nth-child(2) { background: var(--green); }
-    .motif:nth-child(3) { background: var(--cream); border-right: 0; }
-    .motif:nth-child(4) { background: var(--paper-2); border-bottom: 0; }
-    .motif:nth-child(5) { background: var(--peach); border-bottom: 0; }
-    .motif:nth-child(6) { background: #d0bea1; border-right: 0; border-bottom: 0; }
-
-    .petal::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      margin: auto;
-      width: 68px;
-      height: 68px;
-      background:
-        radial-gradient(circle at 50% 16%, #ffd9e8 0 18%, transparent 19%),
-        radial-gradient(circle at 84% 50%, #ffd9e8 0 18%, transparent 19%),
-        radial-gradient(circle at 50% 84%, #ffd9e8 0 18%, transparent 19%),
-        radial-gradient(circle at 16% 50%, #ffd9e8 0 18%, transparent 19%),
-        radial-gradient(circle at 50% 50%, var(--yellow) 0 14%, transparent 15%);
-    }
-
-    .waves::before,
-    .waves::after,
-    .waves span::before {
-      content: "";
-      position: absolute;
-      left: 12%;
-      right: 12%;
-      height: 12px;
-      border-top: 2px solid var(--line);
-      border-bottom: 2px solid var(--line);
-      border-radius: 999px;
-    }
-    .waves::before { top: 28px; }
-    .waves::after { top: 58px; }
-    .waves span::before { top: 88px; }
-
-    .rings::before,
-    .rings::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      border: 2px solid rgba(95,80,67,.45);
-    }
-    .rings::before { width: 190px; height: 190px; right: -42px; bottom: -36px; }
-    .rings::after { width: 125px; height: 125px; right: -8px; bottom: -8px; }
-
-    .spark::before {
-      content: "✦";
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      font-size: 46px;
-      color: var(--yellow);
-    }
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: .95fr 1.05fr;
-    }
-
-    .column {
-      min-width: 0;
-    }
-
-    .left {
-      border-right: 2px solid var(--line);
-      background: rgba(255,255,255,.22);
-    }
-
-    .section {
-      border-bottom: 2px solid var(--line);
-      padding: 22px 24px;
-    }
-
-    .section:last-child { border-bottom: 0; }
-
-    .section h2,
-    .mini-card h3,
-    .link-card .small {
-      margin: 0 0 10px;
-    }
-
-    .section h2 {
-      font-size: 1.45rem;
-      letter-spacing: -.02em;
-    }
-
-    .section p {
-      margin: 0;
-      font-size: 15.5px;
-      line-height: 1.75;
-      color: var(--muted);
-    }
-
-    .bio {
-      background: linear-gradient(180deg, rgba(239,207,221,.22), rgba(255,255,255,.18));
-    }
-
-    .quote {
-      margin-top: 14px;
-      padding: 14px 16px;
-      border: 2px solid var(--line);
-      background: var(--paper-2);
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--ink);
-    }
-
-    .links-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .link-card {
-      min-height: 170px;
-      padding: 18px 18px 16px;
-      border-right: 2px solid var(--line);
-      border-bottom: 2px solid var(--line);
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform .16s ease, background .16s ease;
-    }
-
-    .link-card:nth-child(1) { background: rgba(239,207,221,.55); }
-    .link-card:nth-child(2) { background: rgba(183,220,162,.45); border-right: 0; }
-    .link-card:nth-child(3) { background: rgba(240,215,108,.3); border-bottom: 0; }
-    .link-card:nth-child(4) { background: rgba(200,223,239,.46); border-right: 0; border-bottom: 0; }
-
-    .link-card:hover {
-      transform: translateY(-3px);
-      background: rgba(255,255,255,.7);
-    }
-
-    .link-card .small {
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .link-card strong {
-      display: block;
-      font-size: 1.8rem;
-      line-height: .95;
-      margin: 8px 0;
-    }
-
-    .link-card .url {
-      font-size: .98rem;
-      color: var(--ink);
-      word-break: break-word;
-      line-height: 1.45;
-    }
-
-    .right {
-      display: grid;
-      grid-template-rows: 1fr auto;
-    }
-
-    .poster {
-      min-height: 480px;
-      position: relative;
-      border-bottom: 2px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(239,207,221,.82), rgba(239,207,221,.52));
-      overflow: hidden;
-    }
-
-    .poster::before {
-      content: "";
-      position: absolute;
-      width: 270px;
-      height: 270px;
-      left: 42px;
-      top: 118px;
-      background: var(--sand);
-      border-radius: 42% 58% 66% 34% / 54% 38% 62% 46%;
-      transform: rotate(-18deg);
-      box-shadow: inset 0 0 0 2px rgba(95,80,67,.08);
-    }
-
-    .poster::after {
-      content: "";
-      position: absolute;
-      width: 280px;
-      height: 130px;
-      right: 30px;
-      bottom: 40px;
-      background: #8ec0ec;
-      border: 2px solid var(--line);
-      border-radius: 58% 42% 58% 42% / 58% 44% 56% 42%;
-    }
-
-    .drop {
-      position: absolute;
-      left: 112px;
-      bottom: 118px;
-      width: 128px;
-      height: 172px;
-      background: #ffd8e6;
-      border: 2px solid var(--line);
-      border-radius: 56% 44% 57% 43% / 0% 0% 70% 70%;
-      clip-path: polygon(50% 0%, 68% 15%, 84% 35%, 97% 57%, 94% 77%, 80% 92%, 60% 100%, 40% 100%, 20% 92%, 6% 77%, 3% 57%, 16% 35%, 32% 15%);
-      transform: rotate(7deg);
-    }
-
-    .poster-badge {
-      position: absolute;
-      top: 26px;
-      right: 26px;
-      border: 2px solid var(--line);
-      border-radius: 999px;
-      padding: 10px 16px;
-      background: var(--paper-2);
-      font-size: 14px;
-      transform: rotate(-5deg);
-    }
-
-    .poster-text {
-      position: absolute;
-      left: 28px;
-      right: 28px;
-      bottom: 26px;
-      background: rgba(251,248,241,.82);
-      border: 2px solid rgba(133,116,100,.8);
-      padding: 14px 16px;
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--muted);
-    }
-
-    .mini-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    .mini-card {
-      padding: 18px;
-      border-right: 2px solid var(--line);
-      min-height: 160px;
-    }
-
-    .mini-card:last-child { border-right: 0; }
-    .mini-card:nth-child(1) { background: rgba(240,215,108,.2); }
-    .mini-card:nth-child(2) { background: rgba(183,220,162,.22); }
-    .mini-card:nth-child(3) { background: rgba(239,207,221,.26); }
-
-    .mini-card h3 {
-      font-size: 1.08rem;
-    }
-
-    .mini-card p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--muted);
-    }
-
-    .pill {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 7px 12px;
-      border: 2px solid var(--line);
-      background: var(--paper-2);
-      font-size: 12px;
-    }
-
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 12px 18px;
-      border-top: 2px solid var(--line);
-      background: rgba(255,255,255,.45);
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: .04em;
-    }
-
-    @media (max-width: 980px) {
-      .hero,
-      .content-grid,
-      .mini-grid,
-      .links-wrap {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-left,
-      .left,
-      .link-card,
-      .mini-card {
-        border-right: 0;
-      }
-
-      .title-row { flex-direction: column; }
-      .bubble { margin-top: 0; }
-      .left { border-right: 0; }
-      .link-card:nth-child(3) { border-bottom: 2px solid var(--line); }
-      .mini-card { border-right: 0; border-bottom: 2px solid var(--line); }
-      .mini-card:last-child { border-bottom: 0; }
-      .poster { min-height: 400px; }
-      .footer { flex-direction: column; }
-    }
-
-    @media (max-width: 640px) {
-      body { padding: 12px; }
-      .topbar,
-      .hero-left,
-      .section,
-      .hero-note,
-      .mini-card,
-      .poster-text { padding-left: 16px; padding-right: 16px; }
-      .poster::before { width: 190px; height: 190px; left: 22px; top: 130px; }
-      .poster::after { width: 180px; height: 90px; }
-      .drop { left: 58px; width: 98px; height: 136px; }
-      .motif { min-height: 106px; }
-      .lede { font-size: 16px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Girl's Guide to the Digital World 💖</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--main-color: #ffe2e2;
+--secondary-color: #ffb3ba;
+--accent-color: #ff4d6d;
+--text-color: #725d71;
+--white: #ffffff;
+}
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Poppins', sans-serif;
+}
+body {
+background: linear-gradient(135deg, #ffe2e2, #d7a8f8, #a8d8f8);
+color: var(--text-color);
+overflow-x: hidden;
+}
+nav {
+background: var(--white);
+padding: 20px;
+position: fixed;
+top: 0;
+width: 100%;
+z-index: 100;
+box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+border-radius: 0 0 30px 30px;
+}
+.logo {
+font-size: 1.5rem;
+font-weight: 600;
+color: var(--accent-color);
+}
+.nav-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 1200px;
+margin: 0 auto;
+}
+.nav-links {
+display: flex;
+list-style: none;
+gap: 25px;
+}
+.nav-links a {
+text-decoration: none;
+color: var(--text-color);
+font-weight: 500;
+transition: all 0.3s ease;
+position: relative;
+}
+.nav-links a::after {
+content: '';
+position: absolute;
+bottom: -5px;
+left: 0;
+width: 0;
+height: 2px;
+background: var(--accent-color);
+transition: width 0.3s ease;
+}
+.nav-links a:hover::after, .nav-links a.active::after {
+width: 100%;
+}
+.menu-toggle {
+display: none;
+cursor: pointer;
+font-size: 1.5rem;
+color: var(--accent-color);
+}
+.hero {
+margin-top: 80px;
+padding: 60px 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+text-align: center;
+}
+.hero h1 {
+font-size: 3.5rem;
+color: var(--white);
+text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+margin-bottom: 20px;
+animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+0% { transform: translateY(0); }
+50% { transform: translateY(-10px); }
+100% { transform: translateY(0); }
+}
+.cta-button {
+display: inline-block;
+padding: 15px 35px;
+background: var(--accent-color);
+color: var(--white);
+border-radius: 50px;
+text-decoration: none;
+font-weight: 500;
+box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+transition: all 0.3s ease;
+margin-top: 20px;
+border: 2px solid transparent;
+}
+.cta-button:hover {
+transform: translateY(-3px);
+box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+background: white;
+color: var(--accent-color);
+border-color: var(--accent-color);
+}
+.features {
+padding: 80px 20px;
+max-width: 1200px;
+margin: 0 auto;
+}
+.section-title {
+text-align: center;
+font-size: 2.5rem;
+margin-bottom: 50px;
+color: var(--white);
+text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+.feature-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 30px;
+}
+.feature-card {
+background: var(--white);
+padding: 30px;
+border-radius: 20px;
+text-align: center;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+.feature-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+.feature-icon {
+font-size: 3rem;
+color: var(--secondary-color);
+margin-bottom: 20px;
+}
+.feature-card h3 {
+font-size: 1.3rem;
+margin-bottom: 15px;
+color: var(--text-color);
+}
+.feature-card p {
+color: var(--text-color);
+line-height: 1.6;
+}
+.blog-section {
+padding: 80px 20px;
+background: rgba(255, 255, 255, 0.6);
+}
+.blog-container {
+max-width: 1200px;
+margin: 0 auto;
+}
+.blog-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 30px;
+}
+.blog-card {
+background: var(--white);
+border-radius: 20px;
+overflow: hidden;
+box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+transition: transform 0.3s ease;
+}
+.blog-card:hover {
+transform: translateY(-10px);
+}
+.blog-image {
+height: 200px;
+background: linear-gradient(45deg, var(--secondary-color), var(--main-color));
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 4rem;
+}
+.blog-content {
+padding: 25px;
+}
+.blog-meta {
+font-size: 0.9rem;
+color: var(--text-color);
+margin-bottom: 10px;
+}
+.blog-title {
+font-size: 1.4rem;
+margin-bottom: 15px;
+color: var(--text-color);
+}
+.blog-card p {
+color: var(--text-color);
+line-height: 1.6;
+margin-bottom: 15px;
+}
+footer {
+background: var(--white);
+padding: 60px 20px 20px;
+border-radius: 40px 40px 0 0;
+}
+.footer-content {
+max-width: 1200px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 30px;
+margin-bottom: 40px;
+}
+.footer-section h3 {
+font-size: 1.3rem;
+margin-bottom: 20px;
+color: var(--text-color);
+}
+.footer-links {
+list-style: none;
+}
+.footer-links li {
+margin-bottom: 10px;
+}
+.footer-links a {
+text-decoration: none;
+color: var(--text-color);
+transition: color 0.3s ease;
+}
+.footer-links a:hover {
+color: var(--accent-color);
+}
+.social-links {
+display: flex;
+gap: 15px;
+margin-top: 20px;
+}
+.social-links a {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 40px;
+height: 40px;
+background: var(--main-color);
+border-radius: 50%;
+color: var(--text-color);
+transition: all 0.3s ease;
+}
+.social-links a:hover {
+background: var(--accent-color);
+color: var(--white);
+}
+.copyright {
+text-align: center;
+padding: 20px;
+border-top: 1px solid rgba(114, 93, 113, 0.1);
+color: var(--text-color);
+font-size: 0.9rem;
+}
+.cake-decoration {
+position: fixed;
+font-size: 2rem;
+animation: rotate 15s linear infinite;
+z-index: -1;
+opacity: 0.3;
+}
+@keyframes rotate {
+from { transform: rotate(0deg); }
+to { transform: rotate(360deg); }
+}
+.decoration-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.decoration-2 { top: 30%; right: 15%; animation-delay: 2s; }
+.decoration-3 { bottom: 20%; left: 20%; animation-delay: 4s; }
+@media (max-width: 768px) {
+.nav-links {
+position: absolute;
+top: 70px;
+left: 0;
+width: 100%;
+background: var(--white);
+flex-direction: column;
+padding: 20px;
+box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+display: none;
+}
+.nav-links.active {
+display: flex;
+}
+.menu-toggle {
+display: block;
+}
+.hero h1 {
+font-size: 2.5rem;
+}
+}
+</style>
 </head>
 <body>
-  <main class="site">
-    <div class="topbar">
-      <span>himepop</span>
-      <span>personal links / pastel web home</span>
-      <span>single-file site</span>
-    </div>
-
-    <section class="hero">
-      <div class="hero-left">
-        <div class="kicker">A little archive of favorite corners on the internet</div>
-        <div class="title-row">
-          <h1>himepop</h1>
-          <div class="bubble">welcome! ♡</div>
-        </div>
-        <p class="lede">I keep this page for the things I love returning to: late-night coding, favorite fics, beautiful films, and small internet corners that still feel personal.</p>
-      </div>
-
-      <div class="hero-right">
-        <div class="hero-note">Inspired by editorial print layouts — soft blocks of color, rounded shapes, gentle contrast, and a homepage that feels composed instead of crowded.</div>
-        <div class="motif-grid">
-          <div class="motif petal"></div>
-          <div class="motif waves"><span></span></div>
-          <div class="motif rings"></div>
-          <div class="motif spark"></div>
-          <div class="motif"></div>
-          <div class="motif"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="content-grid">
-      <div class="column left">
-        <section class="section bio">
-          <h2>about</h2>
-          <p>This is my soft little landing page for projects, reading, watching, and writing. I wanted something that felt warm and designed — more like a magazine spread than a plain link list.</p>
-          <div class="quote">Edit the handles below and this becomes a finished GitHub Pages site right away.</div>
-        </section>
-
-        <section class="section" style="padding:0;">
-          <div class="links-wrap">
-            <a class="link-card" href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
-              <div>
-                <div class="small">code</div>
-                <strong>GitHub</strong>
-              </div>
-              <div class="url">github.com/yourusername</div>
-            </a>
-
-            <a class="link-card" href="https://archiveofourown.org/users/yourusername" target="_blank" rel="noopener noreferrer">
-              <div>
-                <div class="small">fic</div>
-                <strong>AO3</strong>
-              </div>
-              <div class="url">archiveofourown.org/users/yourusername</div>
-            </a>
-
-            <a class="link-card" href="https://x.com/yourusername" target="_blank" rel="noopener noreferrer">
-              <div>
-                <div class="small">posts</div>
-                <strong>X</strong>
-              </div>
-              <div class="url">x.com/yourusername</div>
-            </a>
-
-            <a class="link-card" href="https://letterboxd.com/yourusername/" target="_blank" rel="noopener noreferrer">
-              <div>
-                <div class="small">films</div>
-                <strong>Letterboxd</strong>
-              </div>
-              <div class="url">letterboxd.com/yourusername</div>
-            </a>
-          </div>
-        </section>
-      </div>
-
-      <div class="column right">
-        <section class="poster">
-          <div class="poster-badge">pastel link board</div>
-          <div class="drop"></div>
-          <div class="poster-text">A polished version of your page with cleaner spacing, more balanced typography, and a more finished editorial feel while still staying soft and playful.</div>
-        </section>
-
-        <section class="mini-grid">
-          <div class="mini-card">
-            <h3>finished look</h3>
-            <p>More balanced composition, stronger hierarchy, and neater panels so the page feels intentional.</p>
-            <div class="pill">refined layout</div>
-          </div>
-          <div class="mini-card">
-            <h3>easy to edit</h3>
-            <p>Just swap every <em>yourusername</em> with your real handle and keep the file named <em>index.html</em>.</p>
-            <div class="pill">GitHub Pages ready</div>
-          </div>
-          <div class="mini-card">
-            <h3>inspired style</h3>
-            <p>Pastel panels and printed-poster energy, without copying the reference directly.</p>
-            <div class="pill">himepop online</div>
-          </div>
-        </section>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <span>himepop — personal links and favorites</span>
-      <span>rename to index.html / upload to repo / refresh Pages</span>
-    </footer>
-  </main>
+<nav>
+<div class="nav-container">
+<div class="logo"><i class="fas fa-sparkles"></i> DigitalSparkle</div>
+<ul class="nav-links">
+<li><a href="#home" class="active">Home</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#blog">Blog</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+<div class="menu-toggle"><i class="fas fa-bars"></i></div>
+</div>
+</nav>
+<!-- Decorative Elements -->
+<div class="cake-decoration decoration-1">🍰</div>
+<div class="cake-decoration decoration-2">🍭</div>
+<div class="cake-decoration decoration-3">🧸</div>
+<section id="home" class="hero">
+<h1>Welcome to My Digital Dream</h1>
+<p>Your personal corner of the internet where dreams sparkle</p>
+<a href="#features" class="cta-button">Explore My World <i class="fas fa-arrow-right"></i></a>
+</section>
+<section id="features" class="features">
+<h2 class="section-title">Features <i class="fas fa-star"></i></h2>
+<div class="feature-grid">
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-heart"></i></div>
+<h3>Customizable Themes</h3>
+<p>Make your digital space truly yours with our extensive collection of themes and personalization options. Express yourself through colors, layouts, and more.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-bell"></i></div>
+<h3>Smart Notifications</h3>
+<p>Stay updated with everything that matters. Our notification system keeps you informed without being overwhelming, so you never miss a thing.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-comments"></i></div>
+<h3>Engaging Community</h3>
+<p>Connect with like-minded people in our welcoming community. Share your thoughts, get inspired, and build meaningful friendships.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-images"></i></div>
+<h3>Beautiful Galleries</h3>
+<p>Showcase your memories and creative work with our stunning gallery layouts. Perfect for sharing your life's special moments with the world.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-music"></i></div>
+<h3>Curated Playlists</h3>
+<p>Discover music that matches your mood and enhance your browsing experience with our curated playlists from talented creators.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-lock"></i></div>
+<h3>Privacy First</h3>
+<p>Your digital space should be safe and secure. We prioritize your privacy with advanced security features and transparent data practices.</p>
+</div>
+</div>
+</section>
+<section id="blog" class="blog-section">
+<div class="blog-container">
+<h2 class="section-title">Recent Adventures <i class="fas fa-book-open"></i></h2>
+<div class="blog-grid">
+<div class="blog-card">
+<div class="blog-image"><i class="fas fa-palette"></i></div>
+<div class="blog-content">
+<div class="blog-meta">October 15, 2023</div>
+<h3 class="blog-title">My Art Journal Journey</h3>
+<p>Follow along as I rediscover my creative side through art journaling. Learn about the supplies I'm using and techniques I'm exploring to document my everyday moments in beautiful ways.</p>
+<a href="#" class="cta-button">Read More</a>
+</div>
+</div>
+<div class="blog-card">
+<div class="blog-image"><i class="fas fa-plane"></i></div>
+<div class="blog-content">
+<div class="blog-meta">October 8, 2023</div>
+<h3 class="blog-title">Dreamy Destinations</h3>
+<p>Planning my next getaway has me dreaming of pastel-colored streets, cozy cafes, and sunsets that look straight out of a painting. Here's my travel inspiration and wish list!</p>
+<a href="#" class="cta-button">Read More</a>
+</div>
+</div>
+<div class="blog-card">
+<div class="blog-image"><i class="fas fa-cupcake"></i></div>
+<div class="blog-content">
+<div class="blog-meta">September 30, 2023</div>
+<h3 class="blog-title">Baking My Way to Happiness</h3>
+<p>There's something therapeutic about mixing butter and sugar. I've been experimenting with different baking recipes lately, and these strawberry milkshake cupcakes have stolen my heart.</p>
+<a href="#" class="cta-button">Read More</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer id="contact">
+<div class="footer-content">
+<div class="footer-section">
+<h3>About Me <i class="fas fa-heart"></i></h3>
+<p>Welcome to my little corner of the internet! I'm a 23-year-old designer who loves all things cute, pastel, and sparkly. When I'm not coding, you'll find me baking sweet treats, watercolor painting, or collecting vintage toys.</p>
+</div>
+<div class="footer-section">
+<h3>Explore</h3>
+<ul class="footer-links">
+<li><a href="#">Portfolio</a></li>
+<li><a href="#">Latest Projects</a></li>
+<li><a href="#">Resources</a></li>
+<li><a href="#">Tutorials</a></li>
+<li><a href="#">FAQ</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Resources</h3>
+<ul class="footer-links">
+<li><a href="#">Color Palettes</a></li>
+<li><a href="#">Design Tools</a></li>
+<li><a href="#">Font Recommendations</a></li>
+<li><a href="#">Stock Photos</a></li>
+<li><a href="#">Inspiration</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Stay Connected <i class="fas fa-envelope"></i></h3>
+<p>Join my mailing list for exclusive content and design tips delivered to your inbox.</p>
+<form action="#" method="post" class="newsletter-form">
+<input type="email" placeholder="Your email address" required>
+<button type="submit" class="cta-button">Subscribe</button>
+</form>
+<div class="social-links">
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-pinterest"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-tiktok"></i></a>
+</div>
+</div>
+</div>
+<div class="copyright">
+<p>&copy; 2023 DigitalSparkle. Made with <i class="fas fa-heart"></i> by me</p>
+</div>
+</footer>
+<script>
+// Toggle mobile menu
+document.querySelector('.menu-toggle').addEventListener('click', function() {
+document.querySelector('.nav-links').classList.toggle('active');
+});
+// Active navigation link based on scroll position
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+let current = '';
+sections.forEach(section => {
+const sectionTop = section.offsetTop;
+const sectionHeight = section.clientHeight;
+if (pageYOffset >= sectionTop - 200) {
+current = section.getAttribute('id');
+}
+});
+navLinks.forEach(link => {
+link.classList.remove('active');
+if (link.getAttribute('href').slice(1) === current) {
+link.classList.add('active');
+}
+});
+});
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+e.preventDefault();
+document.querySelector(this.getAttribute('href')).scrollIntoView({
+behavior: 'smooth'
+});
+});
+});
+// Newsletter form validation
+document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+e.preventDefault();
+const email = this.querySelector('input[type="email"]').value;
+if (validateEmail(email)) {
+showMessage('Thank you for subscribing! ✨');
+this.querySelector('input[type="email"]').value = '';
+} else {
+showMessage('Please enter a valid email address') // Let user know what went wrong and how to fix it in a helpful way (tone should remain friendly) 🙋‍♀️;
+}
+});
+function validateEmail(email) {
+const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // Basic regex, good starting point 🧐
+return re.test(String(email).toLowerCase());
+}
+function showMessage(message) {
+const notification = document.createElement('div');
+notification.classList.add('notification');
+notification.textContent = message;
+notification.style.cssText = `position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 15px 30px; background: white; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 1000; color: var(--accent-color); font-weight: 500;`;
+document.body.appendChild(notification);
+// And make it disappear after a few seconds for better UX 👇
+setTimeout(() => {
+notification.style.opacity = '0';
+notification.style.transition = 'opacity 0.5s ease';
+setTimeout(() => notification.remove(), 500);
+}, 3000);
+}
+</script>
 </body>
 </html>
